@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
+
 import { Button } from "@/ui/button";
-import { Input } from "@/ui/input";
-import { Label } from "@/ui/label";
 import {
   Card,
   CardContent,
@@ -11,17 +10,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/ui/card";
+import { Input } from "@/ui/input";
+import { Label } from "@/ui/label";
 import * as yup from "yup";
 import { useFormik } from "formik";
 
-export default function Signin() {
+export default function Signup() {
   const schema = yup.object().shape({
+    name: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().required(),
   });
 
   const formik = useFormik({
     initialValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -35,15 +38,25 @@ export default function Signin() {
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardTitle className="text-xl">Cadastrar</CardTitle>
         <CardDescription>
-          Insira seu e-mail abaixo para fazer login na sua conta
+          Insira suas informações para criar uma conta
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-4" onSubmit={handleSubmit}>
           <div className="grid gap-2">
-            <Label htmlFor="email">E-mail</Label>
+            <Label htmlFor="name">Nome</Label>
+            <Input
+              id="name"
+              placeholder="Max Verstappen"
+              value={values.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
@@ -54,28 +67,23 @@ export default function Signin() {
             />
           </div>
           <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">Senha</Label>
-              <Link href="#" className="ml-auto inline-block text-sm underline">
-                Esqueceu sua senha?
-              </Link>
-            </div>
+            <Label htmlFor="password">Senha</Label>
             <Input
               id="password"
               type="password"
               value={values.password}
               onChange={handleChange}
               required
-            />
+            />{" "}
           </div>
           <Button type="submit" className="w-full">
-            Entrar
+            Criar uma conta
           </Button>
         </form>
         <div className="mt-4 text-center text-sm">
-          Não tem uma conta?{" "}
-          <Link href="/auth/signup" className="underline">
-            Cadastre-se
+          Já tem uma conta?{" "}
+          <Link href="#" className="underline">
+            Entrar
           </Link>
         </div>
       </CardContent>
