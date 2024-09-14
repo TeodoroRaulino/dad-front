@@ -1,4 +1,4 @@
-import { Button } from "@/components";
+import { ColorMode } from "@/components";
 import { MountainIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -19,7 +19,7 @@ export const Auth: React.FC<Props> = ({ children }) => {
           <MountainIcon className="h-6 w-6" />
           <span className="text-lg font-semibold">Acme Inc</span>
         </Link>
-        <Button.ColorMode />
+        <ColorMode />
       </div>
       <div className="flex-grow flex items-center justify-center bg-white dark:bg-background">
         {children}
