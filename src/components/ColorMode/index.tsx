@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
 
-export function ColorMode() {
+export const ColorMode = () => {
   const { setTheme } = useTheme();
 
   return (
@@ -35,4 +35,4 @@ export function ColorMode() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
