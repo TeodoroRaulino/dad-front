@@ -10,6 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/ui/sheet";
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
   const isOpen = useCartStore((state) => state.isOpen);
@@ -18,6 +19,7 @@ const Cart = () => {
   const setIsOpen = useCartStore((state) => state.setIsOpen);
   const removeItem = useCartStore((state) => state.removeItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const router = useRouter();
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -93,7 +95,15 @@ const Cart = () => {
                 <span className="font-semibold">Total:</span>
                 <span className="font-semibold">${total.toFixed(2)}</span>
               </div>
-              <Button className="w-full">Checkout</Button>
+              <Button
+                className="w-full"
+                onClick={() => {
+                  setIsOpen(false);
+                  router.push("/checkout");
+                }}
+              >
+                Checkout
+              </Button>
             </div>
           )}
         </div>
