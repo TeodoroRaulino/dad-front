@@ -77,7 +77,7 @@ export const Header = () => {
             )}
           </div>
 
-          <div className="sm:hidden">
+          <div className="sm:hidden flex items-end gap-1">
             <ColorMode />
             <Cart />
 
@@ -89,7 +89,7 @@ export const Header = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
-                <nav className="flex flex-col space-y-4">
+                <nav className="flex flex-col space-y-4 mt-4">
                   <form className="relative">
                     <Input
                       type="search"
