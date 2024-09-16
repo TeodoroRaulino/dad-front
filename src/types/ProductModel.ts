@@ -8,5 +8,5 @@ export interface ProductModelProps {
   image: string;
 
   productId: string;
-  product: ProductProps;
+  product?: ProductProps;
 }
