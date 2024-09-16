@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/ui/card";
-import { cn } from "@/lib/utils";
 
 interface SectionProps {
   children: React.ReactNode;
@@ -27,7 +26,7 @@ export const Section: React.FC<SectionProps> = ({
   contentClassName,
 }) => {
   return (
-    <Card className={cn("xl:col-span-2", mainClassName)}>
+    <Card className={mainClassName}>
       <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between">
         <div className="grid gap-2">
           {title && <CardTitle>{title}</CardTitle>}

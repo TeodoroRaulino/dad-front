@@ -45,7 +45,7 @@ export default function CheckoutPage() {
             Acme Inc Checkout
           </h1>
         </header>
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
           <Section title="Resumo do pedido">
             <ul className="space-y-4">
               {products.map((product) => (
