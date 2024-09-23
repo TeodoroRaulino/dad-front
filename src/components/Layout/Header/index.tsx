@@ -15,15 +15,17 @@ import {
 } from "@/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/ui/sheet";
 import { Cart, ColorMode } from "@/components";
-
-const isLoggedIn = false; //TODO: Change this to true to see the logged-in state
+import { useAuth } from "@/stores/auth";
 
 export const Header = () => {
+  const isLogged = useAuth((state) => state.isLogged);
+  const onLogout = useAuth((state) => state.onLogout);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <header className="border-b">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-0">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
@@ -50,7 +52,7 @@ export const Header = () => {
             <ColorMode />
             <Cart />
 
-            {isLoggedIn ? (
+            {isLogged ? (
               <>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -60,19 +62,18 @@ export const Header = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuLabel>Menu</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Orders</DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuItem>Perfil</DropdownMenuItem>
+                    <DropdownMenuItem>Pedidos</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Log out</DropdownMenuItem>
+                    <DropdownMenuItem onClick={onLogout}>Sair</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </>
             ) : (
               <Button variant="ghost" asChild>
-                <Link href="/login">Log in</Link>
+                <Link href="/auth/signin">Log in</Link>
               </Button>
             )}
           </div>
@@ -101,20 +102,17 @@ export const Header = () => {
                       size={20}
                     />
                   </form>
-                  {isLoggedIn ? (
+                  {isLogged ? (
                     <>
                       <Button variant="ghost" className="justify-start">
                         <User className="h-5 w-5 mr-2" />
-                        Profile
+                        Perfil
                       </Button>
                       <Button variant="ghost" className="justify-start">
-                        Orders
+                        Pedidos
                       </Button>
                       <Button variant="ghost" className="justify-start">
-                        Settings
-                      </Button>
-                      <Button variant="ghost" className="justify-start">
-                        Log out
+                        Sair
                       </Button>
                     </>
                   ) : (
