@@ -6,8 +6,8 @@ interface CartStore {
   items: CartItem[];
   isOpen: boolean;
   addItem: (item: CartItem) => void;
-  removeItem: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
+  removeItem: (id: number) => void;
+  updateQuantity: (id: number, quantity: number) => void;
   setIsOpen: (isOpen: boolean) => void;
   total: number;
   clearCart: () => void;
@@ -29,11 +29,11 @@ export const useCartStore = create(
           if (existingItem) {
             updatedItems = state.items.map((item) =>
               item.id === newItem.id
-                ? { ...item, quantity: item.quantity + 1 }
+                ? { ...item, quantity: item.quantity + newItem.quantity }
                 : item
             );
           } else {
-            updatedItems = [...state.items, { ...newItem, quantity: 1 }];
+            updatedItems = [...state.items, { ...newItem }];
           }
 
           const newTotal = updatedItems.reduce(
