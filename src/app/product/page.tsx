@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
 import ProductCreate from "./components/Create";
-import { ProductProps } from "@/types/Product";
+import { ProductCompleteProps, ProductProps } from "@/types/Product";
 import {
   ColumnDef,
   flexRender,
@@ -40,35 +40,47 @@ import {
   SelectValue,
 } from "@/ui/select";
 
-const mockProducts: ProductProps[] = [
+const mockProducts: ProductCompleteProps[] = [
   // Existing products...
   // Add 30 more products here
 ];
 
 for (let i = 3; i <= 32; i++) {
   mockProducts.push({
-    id: `${i}`,
-    name: `Product ${i}`,
-    category: "Category",
-    models: [
+    product: {
+      id: i,
+      name: `Product ${i}`,
+      category: "Category",
+      product_model_id: 0,
+      description: "",
+      price: 0,
+      quantity: 0,
+      url: "",
+      created_at: "",
+      updated_at: "",
+    },
+    product_models: [
       {
-        id: `${i}a`,
+        id: i * 10,
         description: "Description",
         price: 9.99,
-        stock: 10,
-        image: "/placeholder.svg",
-        productId: `${i}`,
+        quantity: 10,
+        image: "",
+        created_at: "",
+        updated_at: "",
+        productId: "",
       },
     ],
   });
 }
 
 export default function ProductManagement() {
-  const [products, setProducts] = useState<ProductProps[]>(mockProducts);
+  const [products, setProducts] =
+    useState<ProductCompleteProps[]>(mockProducts);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const columns: ColumnDef<ProductProps>[] = [
+  const columns: ColumnDef<ProductCompleteProps>[] = [
     {
       accessorKey: "name",
       header: "Nome",
@@ -80,7 +92,7 @@ export default function ProductManagement() {
     {
       accessorKey: "models",
       header: "Modelos",
-      cell: ({ row }) => row.original.models.length,
+      cell: ({ row }) => row.original.product_models.length,
     },
     {
       id: "actions",
@@ -97,11 +109,13 @@ export default function ProductManagement() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => handleEdit(product)}>
+              <DropdownMenuItem onClick={() => handleEdit(product.product)}>
                 Editar
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleDelete(product.id)}>
+              <DropdownMenuItem
+                onClick={() => handleDelete(product.product.id)}
+              >
                 Excluir
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -126,8 +140,8 @@ export default function ProductManagement() {
     },
   });
 
-  const handleDelete = (id: string) => {
-    setProducts(products.filter((product) => product.id !== id));
+  const handleDelete = (id: number) => {
+    setProducts(products.filter((product) => product.product.id !== id));
   };
 
   const handleEdit = (product: ProductProps) => {

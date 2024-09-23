@@ -15,8 +15,6 @@ export default function ProductDetails() {
     }
   );
 
-  console.log(data);
-
   return (
     <>
       {data && (

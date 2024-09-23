@@ -19,7 +19,6 @@ export default function ProductsPage() {
     `/products?${q ? `search=${q}` : ""}`
   );
 
-  console.log(q);
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold pb-5">Products</h1>

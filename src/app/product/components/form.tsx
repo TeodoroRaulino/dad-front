@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { PlusCircle, Trash2 } from "lucide-react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { ProductProps } from "@/types/Product";
+import { ProductCompleteProps } from "@/types/Product";
 import { Combobox } from "@/components";
 import { useState } from "react";
 
@@ -19,14 +19,14 @@ const categories = [
 ];
 
 interface ProductFormProps {
-  data?: ProductProps;
+  data?: ProductCompleteProps;
 }
 
 export default function ProductForm({ data }: ProductFormProps) {
   const isEdit = Boolean(data);
 
   const [models, setModels] = useState(
-    data?.models || [{ price: 0, description: "", stock: 0 }]
+    data?.product_models || [{ price: 0, description: "", quantity: 0 }]
   );
 
   const schema = yup.object().shape({
@@ -38,7 +38,7 @@ export default function ProductForm({ data }: ProductFormProps) {
         yup.object().shape({
           price: yup.number().required("Preço é obrigatório").min(0),
           description: yup.string().required("Descrição é obrigatória"),
-          stock: yup.number().required("Quantidade é obrigatória").min(0),
+          quantity: yup.number().required("Quantidade é obrigatória").min(0),
         })
       )
       .min(1, "Adicione pelo menos um modelo"),
@@ -46,9 +46,11 @@ export default function ProductForm({ data }: ProductFormProps) {
 
   const formik = useFormik({
     initialValues: {
-      name: data?.name || "",
-      category: data?.category || "",
-      models: data?.models || [{ price: 0, description: "", stock: 0 }],
+      name: data?.product.name || "",
+      category: data?.product.category || "",
+      models: data?.product_models || [
+        { price: 0, description: "", quantity: 0 },
+      ],
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -61,7 +63,7 @@ export default function ProductForm({ data }: ProductFormProps) {
   });
 
   const handleAddModel = () => {
-    setModels([...models, { price: 0, description: "", stock: 0 }]);
+    setModels([...models, { price: 0, description: "", quantity: 0 }]);
     formik.setFieldValue("models", [
       ...models,
       { price: 0, description: "", stock: 0 },
@@ -153,12 +155,12 @@ export default function ProductForm({ data }: ProductFormProps) {
                 />
               </div>
               <div>
-                <Label htmlFor={`models.${index}.stock`}>Quantidade</Label>
+                <Label htmlFor={`models.${index}.quantity`}>Quantidade</Label>
                 <Input
-                  id={`models.${index}.stock`}
-                  name={`models.${index}.stock`}
+                  id={`models.${index}.quantity`}
+                  name={`models.${index}.quantity`}
                   type="number"
-                  value={values.models[index].stock}
+                  value={values.models[index].quantity}
                   onChange={handleChange}
                 />
               </div>
