@@ -1,12 +1,8 @@
+import { Role } from "@/constants/enums/roles";
+
 export interface UserProps {
-  id: string;
-  name: string;
+  id: number;
   email: string;
   role: Role;
-  avatar?: string;
-}
-
-export enum Role {
-  admin,
-  user,
+  jit: string;
 }

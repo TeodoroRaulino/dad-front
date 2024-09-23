@@ -1,7 +1,7 @@
 import { ProductModelProps } from "./ProductModel";
 
 export interface OrderProductProps {
-  id: string;
+  id: number;
   orderId: string;
   price: number;
   quantity: number;

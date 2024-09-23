@@ -1,11 +1,14 @@
 import { ProductProps } from "./Product";
 
 export interface ProductModelProps {
-  id: string;
+  id: number;
   description: string;
   price: number;
-  stock: number;
+  quantity: number;
   image: string;
+
+  created_at: string;
+  updated_at: string;
 
   productId: string;
   product?: ProductProps;
