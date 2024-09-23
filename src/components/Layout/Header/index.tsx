@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { User, Search, Menu, MountainIcon } from "lucide-react";
+import { User, Menu, MountainIcon } from "lucide-react";
 import { Button } from "@/ui/button";
-import { Input } from "@/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,6 +15,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/ui/sheet";
 import { Cart, ColorMode } from "@/components";
 import { useAuth } from "@/stores/auth";
+import Search from "./Search";
 
 export const Header = () => {
   const isLogged = useAuth((state) => state.isLogged);
@@ -35,17 +35,9 @@ export const Header = () => {
           </div>
 
           <div className="hidden sm:block flex-1 max-w-md mx-4">
-            <form className="relative">
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="w-full pl-10"
-              />
-              <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={20}
-              />
-            </form>
+            <div className="relative">
+              <Search />
+            </div>
           </div>
 
           <div className="hidden sm:flex items-center space-x-4">
@@ -91,17 +83,9 @@ export const Header = () => {
               </SheetTrigger>
               <SheetContent side="right">
                 <nav className="flex flex-col space-y-4 mt-4">
-                  <form className="relative">
-                    <Input
-                      type="search"
-                      placeholder="Search products..."
-                      className="w-full pl-10"
-                    />
-                    <Search
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                      size={20}
-                    />
-                  </form>
+                  <div className="relative">
+                    <Search />
+                  </div>
                   {isLogged ? (
                     <>
                       <Button variant="ghost" className="justify-start">
