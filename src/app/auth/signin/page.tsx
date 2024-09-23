@@ -13,8 +13,19 @@ import {
 } from "@/ui/card";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { toast } from "sonner";
+import { PasswordInput } from "@/ui/password-input";
+import { useAuth } from "@/stores/auth";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Spinner } from "@/components";
 
 export default function Signin() {
+  const router = useRouter();
+  const onLogin = useAuth((state) => state.onLogin);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const schema = yup.object().shape({
     email: yup.string().email().required(),
     password: yup.string().required(),
@@ -27,7 +38,16 @@ export default function Signin() {
     },
     validationSchema: schema,
     onSubmit: async (values) => {
-      console.log(values);
+      setIsLoading(true);
+      try {
+        await onLogin(values);
+        toast.success("Login realizado com sucesso");
+        router.push("/store");
+      } catch (error) {
+        toast.error("E-mail ou senha inválidos");
+      } finally {
+        setIsLoading(false);
+      }
     },
   });
 
@@ -56,20 +76,22 @@ export default function Signin() {
           <div className="grid gap-2">
             <div className="flex items-center">
               <Label htmlFor="password">Senha</Label>
-              <Link href="#" className="ml-auto inline-block text-sm underline">
-                Esqueceu sua senha?
-              </Link>
             </div>
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
+              name="password"
+              placeholder="********"
               value={values.password}
               onChange={handleChange}
               required
             />
           </div>
-          <Button type="submit" className="w-full">
-            Entrar
+          <Button
+            type={isLoading ? "button" : "submit"}
+            disabled={isLoading}
+            className="w-full"
+          >
+            {isLoading ? <Spinner.Base /> : "Entrar"}
           </Button>
         </form>
         <div className="mt-4 text-center text-sm">
