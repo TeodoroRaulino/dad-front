@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 
-import { Toaster } from "@/ui/toaster";
+import { Toaster } from "@/ui/sonner";
 import { TooltipProvider } from "@/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Spinner } from "@/components";
