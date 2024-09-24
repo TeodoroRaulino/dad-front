@@ -28,7 +28,7 @@ export default function Component() {
                 <CardContent className="p-0 relative">
                   <Image
                     src={
-                      products.expensive_products[0].url ?? "/placeholder.png"
+                      products.expensive_products[0].url || "/placeholder.png"
                     }
                     alt={products.expensive_products[0].name}
                     width={300}

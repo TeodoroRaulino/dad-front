@@ -120,7 +120,7 @@ interface ProductItemProps {
   name: string;
   description: string;
   price: number;
-  // imageUrl: string
+  url: string;
 }
 
 const ProductItem = ({
@@ -128,13 +128,14 @@ const ProductItem = ({
   name,
   description,
   price,
+  url,
 }: ProductItemProps) => (
   <Card className="border-none mb-2">
     <CardContent className="p-4 flex items-center justify-between">
       <div className="flex items-center space-x-4">
         <div className="relative">
           <Image
-            src={"/smartwatch.jpg"}
+            src={url || "/placeholder.png"}
             alt={name}
             width={48}
             height={48}

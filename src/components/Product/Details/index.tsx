@@ -57,6 +57,7 @@ export const Details: React.FC<ProductPageProps> = ({
         description: selectedModel.description,
         price: selectedModel.price,
         quantity: totalQuantity - currentCartQuantity,
+        url: selectedModel.url,
       });
     }
   };

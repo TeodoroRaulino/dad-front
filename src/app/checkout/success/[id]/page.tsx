@@ -81,7 +81,7 @@ export default function CheckoutSuccess() {
                     className="flex items-center space-x-4 border-b py-4"
                   >
                     <Image
-                      src={"/smartwatch.jpg"}
+                      src={product.url || "/placeholder.png"}
                       alt={product.name}
                       width={80}
                       height={80}

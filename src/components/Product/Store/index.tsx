@@ -46,6 +46,7 @@ export const Store: React.FC<ProductProps> = (product) => {
                   description: product.description,
                   price: product.price,
                   quantity: 1,
+                  url: product.url,
                 });
               }}
             >

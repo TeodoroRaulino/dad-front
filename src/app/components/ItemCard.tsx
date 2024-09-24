@@ -10,7 +10,7 @@ export const ItemCard: React.FC<ProductProps> = (product) => {
       <Link href={`/product/${product.id}`}>
         <CardContent className="p-0 relative">
           <Image
-            src={product.url ?? "/placeholder.png"}
+            src={product.url || "/placeholder.png"}
             alt={product.name}
             width={300}
             height={300}

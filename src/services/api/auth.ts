@@ -38,7 +38,7 @@ export const register = async (
 
     return {
       user: response_data.user as UserProps,
-      token: response_data.tolen as string,
+      token: response_data.token as string,
     };
   } catch (error) {
     throw error;
