@@ -7,7 +7,7 @@ export interface OrderProps {
   id: number;
   user_id: number;
   status: OrderStatus;
-  product_models: ProductModel[];
+  product_models: ProductModelOrderProps[];
   total_price: number;
   created_at: string;
   updated_at: string;
@@ -29,7 +29,7 @@ export interface CheckoutResponseProps {
   updated_at: string;
 }
 
-interface ProductModel {
+export interface ProductModelOrderProps {
   id: number;
   name: string;
   category: string;

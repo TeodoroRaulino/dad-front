@@ -30,8 +30,9 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
 import { Button } from "@/ui/button";
-import { DotsHorizontalIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { getStatusVariant } from "@/utils/badgeStatusVariant";
 
 const columns: ColumnDef<OrderProps>[] = [
   {
@@ -96,27 +97,6 @@ const columns: ColumnDef<OrderProps>[] = [
     },
   },
 ];
-
-function getStatusVariant(
-  status: OrderStatus
-):
-  | "warning"
-  | "success"
-  | "default"
-  | "secondary"
-  | "destructive"
-  | "outline"
-  | null
-  | undefined {
-  switch (status) {
-    case "pending":
-      return "warning";
-    case "finished":
-      return "success";
-    default:
-      return "default";
-  }
-}
 
 export default function OrderTable({ orders }: { orders: OrderProps[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);

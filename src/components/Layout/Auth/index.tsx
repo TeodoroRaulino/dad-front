@@ -15,7 +15,7 @@ export const Auth: React.FC<Props> = ({ children }) => {
           backdropFilter: "blur(20px)",
         }}
       >
-        <Link href="#" className="flex items-center gap-2" prefetch={false}>
+        <Link href="/" className="flex items-center gap-2" prefetch={false}>
           <MountainIcon className="h-6 w-6" />
           <span className="text-lg font-semibold">Acme Inc</span>
         </Link>

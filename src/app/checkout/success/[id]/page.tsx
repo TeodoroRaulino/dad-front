@@ -9,13 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/ui/card";
-import Image from "next/image";
 import { OrderProps } from "@/types/Order";
 import Link from "next/link";
 import { useCartStore } from "@/stores/cart";
 import { useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
-import { Spinner } from "@/components";
+import { Order, Spinner } from "@/components";
 import { useParams } from "next/navigation";
 
 export default function CheckoutSuccess() {
@@ -23,16 +22,6 @@ export default function CheckoutSuccess() {
 
   const { id } = useParams();
   const { data } = useFetch<OrderProps>(`/orders/${id}`);
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("pt-BR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   useEffect(() => {
     clearCart();
@@ -55,53 +44,11 @@ export default function CheckoutSuccess() {
         <CardContent className="space-y-6">
           {data ? (
             <>
-              <div className="rounded-lg border p-4">
-                <h3 className="font-semibold mb-2">Resumo do Pedido</h3>
-                <div className="flex justify-between text-sm">
-                  <span>Número do Pedido:</span>
-                  <span className="font-medium">{data.id}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Data do Pedido:</span>
-                  <span className="font-medium">
-                    {formatDate(data.created_at)}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm"></div>
-                <span>Valor Total:</span>{" "}
-                <span className="font-medium">
-                  R${data.total_price.toFixed(2)}
-                </span>
-              </div>
+              <Order.Summary {...data} />
               <div>
                 <h3 className="font-semibold mb-2">Itens Comprados</h3>
                 {data.product_models.map((product) => (
-                  <div
-                    key={product.id}
-                    className="flex items-center space-x-4 border-b py-4"
-                  >
-                    <Image
-                      src={product.url || "/placeholder.png"}
-                      alt={product.name}
-                      width={80}
-                      height={80}
-                      className="rounded-md"
-                    />
-                    <div className="flex-1">
-                      <h4 className="font-semibold">{product.name}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        {product.description}
-                      </p>
-                      <div className="flex justify-between mt-2">
-                        <span className="text-sm">
-                          Quantidade: {product.quantity}
-                        </span>
-                        <span className="font-medium">
-                          R${(product.price * product.quantity).toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                  <Order.Items key={product.id} {...product} />
                 ))}
               </div>
             </>
@@ -116,10 +63,12 @@ export default function CheckoutSuccess() {
               Continuar Comprando
             </Button>
           </Link>
-          <Button>
-            Ver Detalhes do Pedido
-            <ChevronRight className="ml-2 h-4 w-4" />
-          </Button>
+          <Link href={`/order/${id}`}>
+            <Button>
+              Ver Detalhes do Pedido
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>
