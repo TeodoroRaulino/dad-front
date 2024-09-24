@@ -1,2 +1,2 @@
-export { Signin } from "./Signin";
-export { Signup } from "./Signup";
+export { SignIn } from "./Signin";
+export { SignUp } from "./Signup";

@@ -25,7 +25,7 @@ type SignupProps = {
   redirectTo?: string;
 };
 
-export const Signup: React.FC<SignupProps> = ({ redirectTo }) => {
+export const SignUp: React.FC<SignupProps> = ({ redirectTo }) => {
   const router = useRouter();
   const onSignup = useAuth((state) => state.onSignup);
 

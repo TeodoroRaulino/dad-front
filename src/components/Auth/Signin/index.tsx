@@ -24,7 +24,7 @@ type Signin = {
   redirectTo?: string;
 };
 
-export const Signin: React.FC<Signin> = ({ redirectTo }) => {
+export const SignIn: React.FC<Signin> = ({ redirectTo }) => {
   const router = useRouter();
   const onLogin = useAuth((state) => state.onLogin);
 
