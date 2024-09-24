@@ -1,6 +1,7 @@
 "use client";
 
 import { Section, Spinner } from "@/components";
+import { useAuth } from "@/stores/auth";
 import { useCartStore } from "@/stores/cart";
 import { Button } from "@/ui/button";
 import { Label } from "@/ui/label";
@@ -22,6 +23,7 @@ export default function CheckoutPage() {
   const total = useCartStore((state) => state.total);
   const removeItem = useCartStore((state) => state.removeItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const isLogged = useAuth((state) => state.isLogged);
   const router = useRouter();
 
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
@@ -32,10 +34,11 @@ export default function CheckoutPage() {
   }, []);
 
   useEffect(() => {
-    if (mounted && products.length === 0) router.push("/store");
-  }, [products, router, mounted]);
+    if (!isLogged) router.push("/checkout/auth");
+    if (mounted && products.length === 0) router.push("/");
+  }, [products, router, mounted, isLogged]);
 
-  if (!mounted || products.length === 0) return <Spinner.Base />;
+  if (!mounted || products.length === 0 || !isLogged) return <Spinner.Base />;
 
   return (
     <div className="min-h-screen">

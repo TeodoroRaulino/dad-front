@@ -9,7 +9,7 @@ export default function CheckoutLayout({
 }) {
   return (
     <div>
-      <Layout.Checkout />
+      <Layout.Header />
       <main>{children}</main>
     </div>
   );
