@@ -17,6 +17,7 @@ import { ShoppingCart, Lock, ArrowLeft } from "lucide-react";
 
 import { Auth } from "@/components";
 import { useCartStore } from "@/stores/cart";
+import Link from "next/link";
 
 export default function Component() {
   const total = useCartStore((state) => state.total);
@@ -73,10 +74,12 @@ export default function Component() {
           </Tabs>
         </CardContent>
         <CardFooter className="flex justify-start items-center">
-          <Button>
-            Continuar comprando
-            <ArrowLeft className="w-4 h-4 ml-2" />
-          </Button>
+          <Link href={"/search"}>
+            <Button>
+              Continuar comprando
+              <ArrowLeft className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>

@@ -1,33 +1,51 @@
 "use client";
 
 import { Section, Spinner } from "@/components";
+import { checkout } from "@/services/api/orders";
 import { useAuth } from "@/stores/auth";
 import { useCartStore } from "@/stores/cart";
+import { CheckoutProps } from "@/types/Order";
 import { Button } from "@/ui/button";
 import { Label } from "@/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/ui/radio-group";
 import { Separator } from "@/ui/separator";
-import {
-  Banknote,
-  CreditCard,
-  Laptop,
-  Minus,
-  Plus,
-  Trash2,
-} from "lucide-react";
+import { Banknote, CreditCard } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { Card, CardContent } from "@/ui/card";
+import { Badge } from "@/ui/badge";
 
 export default function CheckoutPage() {
   const products = useCartStore((state) => state.items);
   const total = useCartStore((state) => state.total);
-  const removeItem = useCartStore((state) => state.removeItem);
-  const updateQuantity = useCartStore((state) => state.updateQuantity);
   const isLogged = useAuth((state) => state.isLogged);
+  const user = useAuth((state) => state.user);
   const router = useRouter();
 
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const onCheckout = async () => {
+    setLoading(true);
+    const data: CheckoutProps = {
+      user_id: user?.id as number,
+      product_models: products.map((product) => ({
+        id: product.id,
+        quantity: product.quantity,
+      })),
+    };
+
+    try {
+      const response = await checkout(data);
+      router.push(`/checkout/success/${response.id}`);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -52,50 +70,7 @@ export default function CheckoutPage() {
           <Section title="Resumo do pedido">
             <ul className="space-y-4">
               {products.map((product) => (
-                <li
-                  key={product.id}
-                  className="flex flex-col md:flex-row  items-start md:items-center justify-between"
-                >
-                  <div className="flex items-center gap-2 justify-between md:justify-start w-full">
-                    <div className="flex gap-1 items-center">
-                      <Laptop className="w-8 h-8  text-blue-500" />
-                      <span>{product.name}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() =>
-                          updateQuantity(product.id, product.quantity - 1)
-                        }
-                      >
-                        <Minus className="h-4 w-4" />
-                      </Button>
-                      <span>{product.quantity}</span>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() =>
-                          updateQuantity(product.id, product.quantity + 1)
-                        }
-                      >
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="flex items-center w-full md:w-1/3">
-                    <span className="font-semibold">
-                      R$ {(product.price * product.quantity).toFixed(2)}
-                    </span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => removeItem(product.id)}
-                    >
-                      <Trash2 className="h-4 w-4 text-red-500" />
-                    </Button>
-                  </div>
-                </li>
+                <ProductItem key={product.id} {...product} />
               ))}
             </ul>
             <Separator className="my-4" />
@@ -125,8 +100,13 @@ export default function CheckoutPage() {
                 </Label>
               </div>
             </RadioGroup>
-            <Button type="submit" className="w-full mt-8">
+            <Button
+              onClick={onCheckout}
+              disabled={loading}
+              className="w-full mt-8"
+            >
               Finalizar Compra
+              {loading && <Spinner.Base />}
             </Button>
           </Section>
         </div>
@@ -134,3 +114,45 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+interface ProductItemProps {
+  quantity: number;
+  name: string;
+  description: string;
+  price: number;
+  // imageUrl: string
+}
+
+const ProductItem = ({
+  quantity,
+  name,
+  description,
+  price,
+}: ProductItemProps) => (
+  <Card className="border-none mb-2">
+    <CardContent className="p-4 flex items-center justify-between">
+      <div className="flex items-center space-x-4">
+        <div className="relative">
+          <Image
+            src={"/smartwatch.jpg"}
+            alt={name}
+            width={48}
+            height={48}
+            className="rounded-md"
+          />
+          <Badge
+            className="absolute -top-2 -left-2 bg-zinc-700 text-white w-6 h-6 flex items-center justify-center rounded-full"
+            variant="secondary"
+          >
+            {quantity}
+          </Badge>
+        </div>
+        <div>
+          <h3 className="font-semibold">{name}</h3>
+          <p className="text-sm text-gray-400">{description}</p>
+        </div>
+      </div>
+      <div className="text-white font-semibold">${price.toFixed(2)}</div>
+    </CardContent>
+  </Card>
+);
