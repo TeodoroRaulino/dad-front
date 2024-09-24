@@ -17,7 +17,7 @@ export const Store: React.FC<ProductProps> = (product) => {
       <div>
         <Link href={`/product/${product.id}`} prefetch={false}>
           <Image
-            src={"/smartwatch.jpg"}
+            src={product.url || "/placeholder.png"}
             width={300}
             height={300}
             alt={product.name}

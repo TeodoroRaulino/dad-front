@@ -57,7 +57,9 @@ export const Header = () => {
                     <DropdownMenuLabel>Menu</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Perfil</DropdownMenuItem>
-                    <DropdownMenuItem>Pedidos</DropdownMenuItem>
+                    <Link href="/order">
+                      <DropdownMenuItem>Pedidos</DropdownMenuItem>
+                    </Link>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={onLogout}>Sair</DropdownMenuItem>
                   </DropdownMenuContent>
@@ -92,9 +94,11 @@ export const Header = () => {
                         <User className="h-5 w-5 mr-2" />
                         Perfil
                       </Button>
-                      <Button variant="ghost" className="justify-start">
-                        Pedidos
-                      </Button>
+                      <Link href="/order">
+                        <Button variant="ghost" className="justify-start">
+                          Pedidos
+                        </Button>
+                      </Link>
                       <Button variant="ghost" className="justify-start">
                         Sair
                       </Button>

@@ -65,7 +65,7 @@ for (let i = 3; i <= 32; i++) {
         description: "Description",
         price: 9.99,
         quantity: 10,
-        image: "",
+        url: "",
         created_at: "",
         updated_at: "",
         productId: "",

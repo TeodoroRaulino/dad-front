@@ -27,13 +27,13 @@ export default function Component() {
               <Link href={`/product/${products.expensive_products[0].id}`}>
                 <CardContent className="p-0 relative">
                   <Image
-                    src={"/smartwatch.jpg"}
+                    src={
+                      products.expensive_products[0].url ?? "/placeholder.png"
+                    }
                     alt={products.expensive_products[0].name}
-                    width={800}
-                    height={600}
-                    layout="responsive"
-                    objectFit="cover"
-                    className="w-full h-auto rounded-md"
+                    width={300}
+                    height={300}
+                    className="w-full h-48 md:h-[400px] object-cover"
                   />
                   <Badge className="absolute bottom-4 left-4 bg-zinc-800 text-white">
                     {products.expensive_products[0].name}{" "}

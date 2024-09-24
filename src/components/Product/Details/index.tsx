@@ -68,7 +68,7 @@ export const Details: React.FC<ProductPageProps> = ({
     <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
       <div className="grid gap-4">
         <Image
-          src="/smartwatch.jpg"
+          src={selectedModel?.url || "/placeholder.png"}
           alt={product.name}
           width={600}
           height={900}

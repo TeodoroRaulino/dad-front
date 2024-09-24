@@ -1,6 +1,12 @@
+export enum OrderStatus {
+  PENDING = "pending",
+  FINISHED = "finished",
+}
+
 export interface OrderProps {
   id: number;
   user_id: number;
+  status: OrderStatus;
   product_models: ProductModel[];
   total_price: number;
   created_at: string;
@@ -18,7 +24,7 @@ export interface CheckoutProps {
 export interface CheckoutResponseProps {
   id: number;
   user_id: number;
-  status: string;
+  status: OrderStatus;
   created_at: string;
   updated_at: string;
 }
