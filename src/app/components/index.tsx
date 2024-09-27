@@ -1,6 +1,12 @@
 "use client";
 
-import { Card, CardContent } from "@/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/ui/card";
 import { Badge } from "@/ui/badge";
 import Image from "next/image";
 import { ProductProps } from "@/types/Product";
@@ -20,7 +26,9 @@ export default function Component() {
 
   return (
     <>
-      {products && (
+      {products &&
+      products.category_products.length > 0 &&
+      products.expensive_products.length > 0 ? (
         <>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <Card className="col-span-1 md:col-span-2 bg-zinc-900 border-none">
@@ -67,6 +75,21 @@ export default function Component() {
             </div>
           </div>
         </>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Nenhum produto encontrado</CardTitle>
+            <CardDescription>
+              Não foram encontrados produtos correspondentes à sua pesquisa.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>
+              Tente ajustar seus critérios de pesquisa ou adicione novos
+              produtos.
+            </p>
+          </CardContent>
+        </Card>
       )}
     </>
   );
