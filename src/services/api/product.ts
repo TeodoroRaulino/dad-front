@@ -1,12 +1,17 @@
 import api from "@/services/api";
-import { ProductCompleteProps, ProductProps } from "@/types/Product";
+import {
+  ProductCompleteProps,
+  ProductCreateProps,
+  ProductProps,
+} from "@/types/Product";
 
 const prefix = "/products";
 
 const path = {
   getProducts: `${prefix}`,
   getProduct: (id: number) => `${prefix}/${id}`,
-  deleteProduct: (id: number) => `${prefix}/${id}`,
+  awsUploadLink: (filename: string) => `/aws-upload-link?filename=${filename}`,
+  createProduct: `${prefix}`,
 };
 
 export const getProducts = async () => {
@@ -27,9 +32,21 @@ export const getProduct = async (id: number) => {
   }
 };
 
-export const deleteProduct = async (id: number) => {
+export const getAwsUploadLink = async (filename: string) => {
   try {
-    await api.delete(path.deleteProduct(id));
+    const response = await api.get(path.awsUploadLink(filename));
+    return response.data as { url: string; key: string };
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createProduct = async (data: ProductCreateProps) => {
+  try {
+    const response = await api.post(path.getProducts, {
+      product: data,
+    });
+    return response.data as ProductProps;
   } catch (error) {
     throw error;
   }

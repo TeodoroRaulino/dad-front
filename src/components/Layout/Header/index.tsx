@@ -16,10 +16,12 @@ import { Sheet, SheetContent, SheetTrigger } from "@/ui/sheet";
 import { Cart, ColorMode } from "@/components";
 import { useAuth } from "@/stores/auth";
 import Search from "./Search";
+import { Role } from "@/constants/enums/roles";
 
 export const Header = () => {
   const isLogged = useAuth((state) => state.isLogged);
   const onLogout = useAuth((state) => state.onLogout);
+  const user = useAuth((state) => state.user);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -60,6 +62,11 @@ export const Header = () => {
                     <Link href="/order">
                       <DropdownMenuItem>Pedidos</DropdownMenuItem>
                     </Link>
+                    {user?.role === Role.Admin && (
+                      <Link href="/product">
+                        <DropdownMenuItem>Produtos</DropdownMenuItem>
+                      </Link>
+                    )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={onLogout}>Sair</DropdownMenuItem>
                   </DropdownMenuContent>

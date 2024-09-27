@@ -33,6 +33,7 @@ import { Button } from "@/ui/button";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { getStatusVariant } from "@/utils/badgeStatusVariant";
+import { formatPrice } from "@/utils/formatPrice";
 
 const columns: ColumnDef<OrderProps>[] = [
   {
@@ -55,10 +56,7 @@ const columns: ColumnDef<OrderProps>[] = [
     header: "Valor total",
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("total_price"));
-      const formatted = new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(amount);
+      const formatted = formatPrice(amount);
       return <div className="font-medium">{formatted}</div>;
     },
   },

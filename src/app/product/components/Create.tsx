@@ -9,7 +9,11 @@ import {
 import { Plus } from "lucide-react";
 import ProductForm from "./form";
 
-const ProductCreate = () => {
+type Props = {
+  mutate: () => void;
+};
+
+const ProductCreate: React.FC<Props> = ({ mutate }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -17,11 +21,11 @@ const ProductCreate = () => {
           <Plus className="mr-2 h-4 w-4" /> Adicionar Produto
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto w-full md:max-w-[760px]">
         <DialogHeader>
           <DialogTitle>Adicionar Novo Produto</DialogTitle>
         </DialogHeader>
-        <ProductForm />
+        <ProductForm mutate={mutate} />
       </DialogContent>
     </Dialog>
   );

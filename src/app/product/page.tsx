@@ -1,19 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Pencil } from "lucide-react";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/ui/dropdown-menu";
+
 import ProductCreate from "./components/Create";
-import { ProductCompleteProps, ProductProps } from "@/types/Product";
+import { ProductProps } from "@/types/Product";
 import {
   ColumnDef,
   flexRender,
@@ -39,48 +31,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/select";
-
-const mockProducts: ProductCompleteProps[] = [
-  // Existing products...
-  // Add 30 more products here
-];
-
-for (let i = 3; i <= 32; i++) {
-  mockProducts.push({
-    product: {
-      id: i,
-      name: `Product ${i}`,
-      category: "Category",
-      product_model_id: 0,
-      description: "",
-      price: 0,
-      quantity: 0,
-      url: "",
-      created_at: "",
-      updated_at: "",
-    },
-    product_models: [
-      {
-        id: i * 10,
-        description: "Description",
-        price: 9.99,
-        quantity: 10,
-        url: "",
-        created_at: "",
-        updated_at: "",
-        productId: "",
-      },
-    ],
-  });
-}
+import useFetch from "@/hooks/useFetch";
+import Image from "next/image";
+import { formatPrice } from "@/utils/formatPrice";
 
 export default function ProductManagement() {
-  const [products, setProducts] =
-    useState<ProductCompleteProps[]>(mockProducts);
+  const { data: products, mutate } = useFetch<ProductProps[]>(`/products`);
   const [sorting, setSorting] = useState<SortingState>([]);
+
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const columns: ColumnDef<ProductCompleteProps>[] = [
+  const columns: ColumnDef<ProductProps>[] = [
+    {
+      accessorKey: "url",
+      header: "Imagem",
+      cell: ({ row }) => {
+        const { url, name } = row.original;
+        return (
+          <Image
+            src={url || "/placeholder.png"}
+            alt={name}
+            width={80}
+            height={80}
+            className="rounded-md"
+          />
+        );
+      },
+    },
     {
       accessorKey: "name",
       header: "Nome",
@@ -90,43 +67,26 @@ export default function ProductManagement() {
       header: "Categoria",
     },
     {
-      accessorKey: "models",
-      header: "Modelos",
-      cell: ({ row }) => row.original.product_models.length,
+      accessorKey: "description",
+      header: "Descrição",
     },
     {
-      id: "actions",
+      accessorKey: "price",
+      header: "Preço",
       cell: ({ row }) => {
-        const product = row.original;
-
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Abrir menu</span>
-                <Pencil className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => handleEdit(product.product)}>
-                Editar
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => handleDelete(product.product.id)}
-              >
-                Excluir
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
+        const amount = row.original.price;
+        const formatted = formatPrice(amount);
+        return <div>{formatted}</div>;
       },
+    },
+    {
+      accessorKey: "quantity",
+      header: "Quantidade",
     },
   ];
 
   const table = useReactTable({
-    data: products,
+    data: products || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -140,14 +100,6 @@ export default function ProductManagement() {
     },
   });
 
-  const handleDelete = (id: number) => {
-    setProducts(products.filter((product) => product.product.id !== id));
-  };
-
-  const handleEdit = (product: ProductProps) => {
-    console.log("Edit product:", product);
-  };
-
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-3xl font-bold mb-5">Gerenciamento de Produtos</h1>
@@ -158,7 +110,7 @@ export default function ProductManagement() {
           onChange={(e) => setGlobalFilter(e.target.value)}
           className="max-w-sm"
         />
-        <ProductCreate />
+        <ProductCreate mutate={mutate} />
       </div>
       <div className="rounded-md border">
         <Table>

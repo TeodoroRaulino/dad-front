@@ -7,12 +7,14 @@ import * as Order from "./Order";
 import * as Product from "./Product";
 import { Section } from "./Section";
 import * as Spinner from "./Spinner";
+import { DragnDrop as FileInput } from "./File";
 
 export {
   Auth,
   Cart,
   ColorMode,
   Combobox,
+  FileInput,
   Layout,
   Order,
   Product,

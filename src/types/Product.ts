@@ -23,9 +23,16 @@ export interface ProductProps {
 export interface ProductCreateProps {
   name: string;
   category: string;
-  product_models: {
-    description: string;
-    price: number;
-    quantity: number;
-  }[];
+  product_models: ModelForCreate[];
+}
+
+export interface ModelForCreate {
+  price: number;
+  description: string;
+  quantity: number;
+  image_key: string;
+}
+
+export interface ProductCategoriesProps {
+  categories: string[];
 }
