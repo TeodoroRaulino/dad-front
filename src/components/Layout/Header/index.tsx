@@ -58,7 +58,6 @@ export const Header = () => {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Menu</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Perfil</DropdownMenuItem>
                     <Link href="/order">
                       <DropdownMenuItem>Pedidos</DropdownMenuItem>
                     </Link>
