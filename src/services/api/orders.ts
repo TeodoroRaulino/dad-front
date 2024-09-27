@@ -14,7 +14,6 @@ export const checkout = async (
     const response = await api.post(path.checkout, {
       order: data,
     });
-    console.log(response.data);
     return response.data as CheckoutResponseProps;
   } catch (error) {
     throw error;

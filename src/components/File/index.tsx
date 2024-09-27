@@ -70,7 +70,14 @@ export const DragnDrop: React.FC<FileUploadProps> = ({
             Arraste e solte os arquivos aqui
           </p>
           <p className="font-bold text-md text-gray-700">ou</p>
-          <Button variant="link" asChild className="text-primary">
+          <Button
+            variant="link"
+            asChild
+            onClick={() =>
+              document.getElementById(props.id || "fileUpload")?.click()
+            }
+            className="text-primary"
+          >
             <label htmlFor="fileUpload">Procurar no computador</label>
           </Button>
 
@@ -78,12 +85,11 @@ export const DragnDrop: React.FC<FileUploadProps> = ({
             Arquivos suportados: JPEG, PNG, MP4
           </p>
           <Input
+            {...props}
+            id={props.id || "fileUpload"}
             type="file"
-            multiple
             onChange={handleFileChange}
             className="hidden"
-            id="fileUpload"
-            {...props}
           />
 
           {showFileSelected && files.length > 0 && (

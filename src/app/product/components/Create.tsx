@@ -8,16 +8,32 @@ import {
 } from "@/ui/dialog";
 import { Plus } from "lucide-react";
 import ProductForm from "./form";
+import { useState } from "react";
 
 type Props = {
   mutate: () => void;
 };
 
 const ProductCreate: React.FC<Props> = ({ mutate }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  function handleClose() {
+    setIsOpen(false);
+  }
   return (
-    <Dialog>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          handleClose();
+        }
+      }}
+    >
       <DialogTrigger asChild>
-        <Button>
+        <Button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
           <Plus className="mr-2 h-4 w-4" /> Adicionar Produto
         </Button>
       </DialogTrigger>
@@ -25,7 +41,7 @@ const ProductCreate: React.FC<Props> = ({ mutate }) => {
         <DialogHeader>
           <DialogTitle>Adicionar Novo Produto</DialogTitle>
         </DialogHeader>
-        <ProductForm mutate={mutate} />
+        <ProductForm mutate={mutate} onClose={handleClose} />
       </DialogContent>
     </Dialog>
   );

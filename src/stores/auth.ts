@@ -51,8 +51,6 @@ export const useAuth = create(
             password_confirmation,
           });
 
-          console.log(user, token);
-
           set({ user, isLogged: true });
           Cookies.set(token_key, token, { expires: 1 });
         } catch (error) {

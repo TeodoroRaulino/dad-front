@@ -24,9 +24,10 @@ interface Model {
 
 type Props = {
   mutate: () => void;
+  onClose: () => void;
 };
 
-export default function ProductForm({ mutate }: Props) {
+export default function ProductForm({ mutate, onClose }: Props) {
   const { data: categories } = useFetch<ProductCategoriesProps>(
     "categories",
     {}
@@ -94,6 +95,7 @@ export default function ProductForm({ mutate }: Props) {
 
       await createProduct(data);
       mutate();
+      onClose();
       formik.resetForm();
     } catch (error) {
       toast.error("Erro ao cadastrar produto");
@@ -295,6 +297,7 @@ export default function ProductForm({ mutate }: Props) {
               <div>
                 <Label>Arquivos</Label>
                 <FileInput
+                  id={`models.${index}.files`}
                   onChange={(e) => handleFileChange(e, index)}
                   showFileSelected
                 />
