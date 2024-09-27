@@ -183,7 +183,6 @@ export default function ProductForm({ mutate, onClose }: Props) {
   }, [categories]);
 
   const { values, handleChange, handleSubmit, errors, touched } = formik;
-  console.log("values", values);
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">{"Cadastro de Produto"}</h1>
