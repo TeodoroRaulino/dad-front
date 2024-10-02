@@ -14,9 +14,9 @@ export const ItemCard: React.FC<ProductProps> = (product) => {
             alt={product.name}
             width={300}
             height={300}
-            className="w-full h-48 object-cover rounded-sm"
+            className="w-full h-48 object-contain rounded-sm"
           />
-          <Badge className="absolute bottom-4 left-4 bg-zinc-800 text-white">
+          <Badge className="absolute bottom-4 left-4 text-white">
             {product.name}{" "}
             <span className="ml-2 text-blue-400">R${product.price} BRL</span>
           </Badge>

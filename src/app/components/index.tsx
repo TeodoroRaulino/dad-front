@@ -31,7 +31,7 @@ export default function Component() {
       products.expensive_products.length > 0 ? (
         <>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <Card className="col-span-1 md:col-span-2 bg-zinc-900 border-none">
+            <Card className="col-span-1 md:col-span-2  border-none">
               <Link href={`/product/${products.expensive_products[0].id}`}>
                 <CardContent className="p-0 relative">
                   <Image
@@ -41,7 +41,7 @@ export default function Component() {
                     alt={products.expensive_products[0].name}
                     width={300}
                     height={300}
-                    className="w-full h-48 md:h-[400px] object-cover"
+                    className="w-full h-48 md:h-[400px] object-contain"
                   />
                   <Badge className="absolute bottom-4 left-4 bg-zinc-800 text-white">
                     {products.expensive_products[0].name}{" "}

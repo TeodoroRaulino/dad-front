@@ -74,7 +74,7 @@ export const Details: React.FC<ProductPageProps> = ({
           alt={product.name}
           width={600}
           height={900}
-          className="aspect-[3/3] object-cover border w-full rounded-lg overflow-hidden"
+          className="aspect-[3/3] object-contain border w-full rounded-lg overflow-hidden"
         />
       </div>
       <div className="grid gap-4 md:gap-10 items-start">
