@@ -34,12 +34,15 @@ import {
 import useFetch from "@/hooks/useFetch";
 import Image from "next/image";
 import { formatPrice } from "@/utils/formatPrice";
+import { useRouter } from "next/navigation";
 
 export default function ProductManagement() {
   const { data: products, mutate } = useFetch<ProductProps[]>(`/products`);
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const [globalFilter, setGlobalFilter] = useState("");
+
+  const router = useRouter();
 
   const columns: ColumnDef<ProductProps>[] = [
     {
@@ -136,6 +139,8 @@ export default function ProductManagement() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => router.push(`/product/${row.original.id}`)}
+                  className="cursor-pointer"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
