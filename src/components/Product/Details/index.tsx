@@ -13,6 +13,7 @@ import { Button } from "@/ui/button";
 import { ProductProps } from "@/types/Product";
 import { ProductModelProps } from "@/types/ProductModel";
 import { useCartStore } from "@/stores/cart";
+import { formatPrice } from "@/utils/formatPrice";
 
 interface ProductPageProps {
   product: ProductProps;
@@ -107,7 +108,7 @@ export const Details: React.FC<ProductPageProps> = ({
                     id={`model-${model.id}`}
                     value={model.id.toString()}
                   />
-                  {model.description} - ${model.price.toFixed(2)}
+                  {model.description} - {formatPrice(model.price)}
                 </Label>
               ))}
             </RadioGroup>

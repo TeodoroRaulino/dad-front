@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/ui/card";
 import { Badge } from "@/ui/badge";
+import { formatPrice } from "@/utils/formatPrice";
 
 export default function CheckoutPage() {
   const products = useCartStore((state) => state.items);
@@ -153,7 +154,7 @@ const ProductItem = ({
           <p className="text-sm text-gray-400">{description}</p>
         </div>
       </div>
-      <div className="text-white font-semibold">${price.toFixed(2)}</div>
+      <div className="text-white font-semibold">{formatPrice(price)}</div>
     </CardContent>
   </Card>
 );
