@@ -84,7 +84,7 @@ export const Details: React.FC<ProductPageProps> = ({
             <p>Categoria: {product.category}</p>
           </div>
           <div className="text-4xl font-bold">
-            ${selectedModel ? selectedModel.price.toFixed(2) : "---"}
+            R${selectedModel ? selectedModel.price.toFixed(2) : "---"}
           </div>
         </div>
         <form className="grid gap-4 md:gap-10">
@@ -117,7 +117,9 @@ export const Details: React.FC<ProductPageProps> = ({
             <Label htmlFor="quantity" className="text-base">
               Quantidade
             </Label>
-            {selectedModel && getCartQuantity(selectedModel.id) >= 3 ? (
+            {selectedModel && selectedModel.quantity === 0 ? (
+              <p className="text-red-500">Produto indisponível</p>
+            ) : selectedModel && getCartQuantity(selectedModel.id) >= 3 ? (
               <p className="text-red-500">
                 Você já tem o limite máximo no carrinho
               </p>
